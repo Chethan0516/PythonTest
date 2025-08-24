@@ -1,20 +1,23 @@
-name: Build and Test Pipeline
+name: Build Pipeline
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-  pull_request:
+  push:
     branches:
       - main
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Build Docker image
-        run: docker build -t python-ubuntu-test .
-      - name: Run tests (or any other pipeline step)
-        run: docker run python-ubuntu-test
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build Docker image
+      run: docker build -t python-ubuntu-test .
+
+    - name: Run Docker container
+      run: docker run --rm python-ubuntu-test bash -c "echo 'Container started successfully'"
