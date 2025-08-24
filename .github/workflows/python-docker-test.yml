@@ -1,23 +1,20 @@
-name: Build Pipeline
+name: Build Pipeline on Self-Hosted Runner
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted   # Run the job on your self-hosted runner (Ubuntu)
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Build Docker image
-      run: docker build -t python-ubuntu-test .
+      - name: Build Docker image
+        run: docker build -t python-ubuntu-test .
 
-    - name: Run Docker container
-      run: docker run --rm python-ubuntu-test bash -c "echo 'Container started successfully'"
+      - name: Run Docker container
+        run: docker run python-ubuntu-test bash -c "echo Container runs successfully on self-hosted Ubuntu runner"
