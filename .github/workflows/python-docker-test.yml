@@ -1,4 +1,4 @@
-name: Test Python in Docker
+name: Build and Test Pipeline
 
 on:
   push:
@@ -9,15 +9,12 @@ on:
       - main
 
 jobs:
-  docker-test:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Build Docker image
-      run: docker build -t python-test-image .
-
-    - name: Run tests in Docker container
-      run: docker run python-test-image
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t python-ubuntu-test .
+      - name: Run tests (or any other pipeline step)
+        run: docker run python-ubuntu-test
